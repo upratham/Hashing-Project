@@ -13,7 +13,7 @@ class PreprocessText:
     def download_text(url: str = GUTENBERG_URL) -> str:
         """Download text from the specified URL."""
         logging.info(f"Downloading text from {url}...")
-        response = requests.get(url, timeout=30)
+        response = requests.get(GUTENBERG_URL, timeout=30)
         response.raise_for_status()
         logging.info("Download successful.")
         return response.text
@@ -31,7 +31,8 @@ class PreprocessText:
         else:
             main_text = raw_text[start_idx + len(START_MARKER):end_idx]
         
+        lines= main_text.splitlines()
         # Tokenize: split on non-alphanumeric characters, convert to lowercase
         tokens = [word.lower() for word in re.split(r'\W+', main_text) if word]
         logging.info(f"Preprocessing complete. Total tokens: {len(tokens)}")
-        return tokens
+        return tokens,lines

@@ -11,6 +11,7 @@ logging.getLogger("matplotlib.font_manager").setLevel(logging.WARNING)
 class ChainNode:
     """A single node in a singly-linked list used for collision chaining."""
     __slots__ = SLOTS
+    
 
     def __init__(self, word: str):
         self.word: str        = word
@@ -31,7 +32,10 @@ class HashTable:
       - Dynamic resize (doubles capacity when load factor > 0.75)
     """
 
-    
+    _BASE   = BASE          # prime base for polynomial hash
+    _MOD    = MOD   # large prime modulus
+    _MAX_LF = MAX_LF        # resize threshold
+
 
     def __init__(self, capacity: int = 1024):
         self._capacity  = capacity
@@ -48,14 +52,14 @@ class HashTable:
         """
         h = 0
         for ch in word:
-            h = (h * self.BASE + ord(ch)) % self.MOD
+            h = (h * self._BASE + ord(ch)) % self._MOD
         return h % self._capacity
 
     # ── Insert / Update ──────────────────────────────────────────────────
     def insert(self, word: str, line_number: int) -> None:
         """Insert a word occurrence.  Creates a new entry or increments count."""
         # Resize before inserting if load factor exceeded
-        if self._size / self._capacity >= self.MAX_LF:
+        if self._size / self._capacity >= self._MAX_LF:
             self._resize()
 
         idx  = self._hash(word)
@@ -162,3 +166,4 @@ logging.info("HashTable class defined.")
 def tokenize(line: str) -> list:
     """Extract lowercase alphabetic tokens (contractions intact)."""
     return TOKEN_RE.findall(line.lower())
+
