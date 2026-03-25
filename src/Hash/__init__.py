@@ -48,14 +48,14 @@ class HashTable:
         """
         h = 0
         for ch in word:
-            h = (h * self._BASE + ord(ch)) % self._MOD
+            h = (h * self.BASE + ord(ch)) % self.MOD
         return h % self._capacity
 
     # ── Insert / Update ──────────────────────────────────────────────────
     def insert(self, word: str, line_number: int) -> None:
         """Insert a word occurrence.  Creates a new entry or increments count."""
         # Resize before inserting if load factor exceeded
-        if self._size / self._capacity >= self._MAX_LF:
+        if self._size / self._capacity >= self.MAX_LF:
             self._resize()
 
         idx  = self._hash(word)
@@ -158,3 +158,7 @@ class HashTable:
         return dict(sorted(dist.items()))
 
 logging.info("HashTable class defined.")
+
+def tokenize(line: str) -> list:
+    """Extract lowercase alphabetic tokens (contractions intact)."""
+    return TOKEN_RE.findall(line.lower())
