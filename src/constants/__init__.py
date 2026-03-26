@@ -27,6 +27,6 @@ MAX_LOG_SIZE = 5 * 1024 * 1024  # 5 MB
 BACKUP_COUNT = 3
 
 #Constants for Dowanload and preprocess text
-GUTENBERG_URL = "https://gutenberg.org/files/1513/1513-0.txt"
+FILE_PATH = "data\Romeo and Juliet.txt"
 START_MARKER = "*** START OF THE PROJECT GUTENBERG EBOOK"
 END_MARKER   = "*** END OF THE PROJECT GUTENBERG EBOOK"

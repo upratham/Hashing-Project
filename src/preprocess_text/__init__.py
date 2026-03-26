@@ -10,13 +10,13 @@ class PreprocessText:
     """Class to handle downloading and preprocessing text data."""
 
     @staticmethod
-    def download_text(url: str = GUTENBERG_URL) -> str:
-        """Download text from the specified URL."""
-        logging.info(f"Downloading text from {url}...")
-        response = requests.get(GUTENBERG_URL, timeout=30)
-        response.raise_for_status()
-        logging.info("Download successful.")
-        return response.text
+    def load_text(url: str = FILE_PATH) -> str:
+        """Load text from the specified file path."""
+        logging.info(f"Loading text from {url}...")
+        with open(url, "r", encoding="utf-8") as f:
+            text = f.read()
+        logging.info("Text loaded successfully.")
+        return text
     
     @staticmethod
     def preprocess_text(raw_text: str) -> list:
